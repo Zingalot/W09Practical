@@ -7,49 +7,34 @@ public class dblpVenueHandler extends DefaultHandler
 
     boolean venue = false;
     private static ArrayList<String> venues = new ArrayList();
+    private StringBuilder chars = new StringBuilder();
 
-
-    // Make sure that the code in DefaultHandler's
-    // constructor is called:
+    // Call super constructor
     public dblpVenueHandler()
     {
         super();
     }
 
-
-    /*** Below are the three methods that we are extending ***/
-
-    /*@Override
-    public void startDocument()
-    {
-        System.out.println("Start document");
-    }
-
-
+    // Operates similarly to the other handlers
     @Override
-    public void endDocument()
-    {
-        System.out.println("End document");
-    }
-    */
-
-
-    // This is where all the work is happening:
-    @Override
-    public void startElement(String uri, String name, String qName, Attributes atts)
-    {
+    public void startElement(String uri, String name, String qName, Attributes atts) {
         if(qName.compareTo("venue") == 0)
         {
             venue = true;
         }
-
     }
-    public void characters(char ch[], int start, int length){
 
-        if (venue) {
-            //System.out.println("Author: " + new String(ch, start, length));
-            venues.add(new String(ch, start, length));
+    public void endElement(String uri, String name, String qName){
+        if(qName.compareTo("venue") == 0){
+            venues.add(chars.toString());
             venue = false;
+            chars.setLength(0);
+        }
+    }
+
+    public void characters(char ch[], int start, int length){
+        if (venue) {
+            chars.append(ch, start, length);
         }
     }
 

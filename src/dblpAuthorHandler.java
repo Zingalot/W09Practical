@@ -13,36 +13,19 @@ public class dblpAuthorHandler extends DefaultHandler
     boolean url = false;
     private static ArrayList<String> authors = new ArrayList();
     private static ArrayList<URL> urls = new ArrayList();
+    private StringBuilder chars = new StringBuilder();
 
-
-    // Make sure that the code in DefaultHandler's
-    // constructor is called:
+    // Call super constructor
     public dblpAuthorHandler()
     {
         super();
     }
 
-
-    /*** Below are the three methods that we are extending ***/
-
-    /*@Override
-    public void startDocument()
-    {
-        System.out.println("Start document");
-    }
-
-
-    @Override
-    public void endDocument()
-    {
-        System.out.println("End document");
-    }
-    */
-
-    // This is where all the work is happening:
+    //Override Element and Character events
     @Override
     public void startElement(String uri, String name, String qName, Attributes atts)
     {
+        // Sets a boolean to true if the parser is 'in' a tag
         if(qName.compareTo("info") == 0){
             info = true;
         }
@@ -51,19 +34,20 @@ public class dblpAuthorHandler extends DefaultHandler
             author = true;
         }
 
+        // An extra check needed here as there is more than one type of URL tag
         if((qName.compareTo("url") == 0) && info == true){
             url = true;
         }
     }
-    public void characters(char ch[], int start, int length){
 
-        if (author) {
-            //System.out.println("Author: " + new String(ch, start, length));
-            authors.add(new String(ch, start, length));
+    public void endElement(String uri, String name, String qName){
+        if(qName.compareTo("author") == 0) {
+            authors.add(chars.toString());
             author = false;
+            chars.setLength(0);
         }
-        if (info && url){
-            String urlString = new String(ch, start, length);
+        if(qName.compareTo("url") == 0 && info == true) {
+            String urlString = chars.toString();
             String urlIncludingFile = (urlString + ".xml");
             try {
                 URL formattedURL = new URL(urlIncludingFile);
@@ -71,10 +55,23 @@ public class dblpAuthorHandler extends DefaultHandler
             }catch (MalformedURLException mue){
                 mue.printStackTrace();
             }
-
-            //System.out.println(urlFound);
             info = false;
             url = false;
+            chars.setLength(0);
+        }
+
+    }
+    public void characters(char ch[], int start, int length){
+
+        if (author) {
+            // Adds the author's name to the ArrayList,
+            chars.append(ch, start, length);
+        }
+
+
+        if (info && url){
+            // Creates and adds the URL object to an ArrayList
+            chars.append(ch, start, length);
         }
     }
 
