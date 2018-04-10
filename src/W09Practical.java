@@ -1,12 +1,11 @@
 public class W09Practical {
-
+    public static String cachePath;
     public static void main(String[] args) throws ArrayIndexOutOfBoundsException {
         final String SEARCH_COMMAND = "--search";
         final String QUERY_COMMAND = "--query";
         final String CACHE_COMMAND = "--cache";
         int searchChoice = 0;
         String query = "";
-        String cachePath;
         if(args.length == 0){
             System.out.println("Usage: java W09Practical --search [author, publication, venue] --query <query> " +
                     "--cache <cache_filepath>");
@@ -68,7 +67,7 @@ public class W09Practical {
                 break;
             case 3:
                 Search searcher3 = new Search("venue");
-                searcher3.executeSearch("Logic");
+                searcher3.executeSearch(query);
                 for (int i = 0; i <dblpVenueHandler.getVenues().size(); i++ ) {
                     System.out.println(dblpVenueHandler.getVenues().get(i));
                 }

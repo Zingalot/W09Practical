@@ -1,6 +1,12 @@
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.net.URLEncoder;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import javax.xml.parsers.ParserConfigurationException;
@@ -8,6 +14,7 @@ import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
 public class Search {
+    public static final String encoding = "ISO_8859_1";
     public static String urlStart = "";
     public static final String AUTHOR_URL_START = "http://dblp.org/search/author/api?q=";
     public static final String VENUE_URL_START = "http://dblp.org/search/venue/api?q=";
@@ -16,6 +23,8 @@ public class Search {
     private boolean author;
     private boolean venue;
     private boolean publication;
+    private boolean newFile = true;
+    private InputStream in;
 
     // Sets the type of search, and picks the correct API to use
     public Search(String choice){
@@ -41,15 +50,39 @@ public class Search {
         // Replace blanks just in case
         query = query.replace(" ", "%20");
 
+
+
         //Implement the query in a try-catch block
         try {
+            //Create the cache directory and download the xml file
+            File directory = new File("src\\\\" + String.valueOf(W09Practical.cachePath));
+            directory.mkdir();
             URL urlObject = new URL(query);
+            String path = "src\\\\" + W09Practical.cachePath + "\\\\" + URLEncoder.encode(query,encoding);
+            File cacheFile = new File(path);
+            File[] cacheDirectory = directory.listFiles();
+            if(cacheDirectory != null){
+                for (File child : cacheDirectory){
+                    if(child.getName().equals(URLEncoder.encode(query, encoding))){
+                        newFile = false;
+                    }
+                }
+                if(newFile == true){
+                    Files.copy(urlObject.openStream(), Paths.get(path));
+                }
+            }
+
 
             // Open the stream (which returns an InputStream)
-            InputStream in = urlObject.openStream();
+            if(newFile == true) {
+                this.in = urlObject.openStream();
+            }
+            else{
+                this.in = new FileInputStream(cacheFile);
+            }
             // Wrap the steam in an input source for compatibility with the SAX parser
             InputSource is = new InputSource(in);
-            is.setEncoding("ISO_8859_1");
+            is.setEncoding(encoding);
 
             // Create the parser
             SAXParserFactory factory = SAXParserFactory.newDefaultInstance();
