@@ -4,8 +4,7 @@ import java.util.ArrayList;
 
 
 // Handler for the second API search needed for author search only
-public class dblpAuthorUrlHandler extends DefaultHandler
-{
+public class dblpAuthorUrlHandler extends DefaultHandler {
 
     private static ArrayList<Integer> publicationsByAuthor = new ArrayList<Integer>();
     private static ArrayList<Integer> coAuthors = new ArrayList<Integer>();
@@ -13,29 +12,25 @@ public class dblpAuthorUrlHandler extends DefaultHandler
 
 
     // Call super constructor
-    public dblpAuthorUrlHandler()
-    {
+    public dblpAuthorUrlHandler() {
         super();
     }
 
     // Similar to other handlers
     @Override
-    public void startElement(String uri, String name, String qName, Attributes atts)
-    {
-        if(qName.compareTo("dblpperson") == 0)
-        {
+    public void startElement(String uri, String name, String qName, Attributes atts) {
+        if (qName.compareTo("dblpperson") == 0) {
             publicationsByAuthor.add(Integer.parseInt((atts.getValue(1))));
         }
-        if(qName.compareTo("coauthors") == 0)
-        {
+        if (qName.compareTo("coauthors") == 0) {
             coAuthors.add(Integer.parseInt((atts.getValue(0))));
             coAuthorsFound = true;
         }
 
     }
 
-    public void endElement(String uri, String name, String qName){
-        if(qName.compareTo("dblpperson") == 0 && !coAuthorsFound){
+    public void endElement(String uri, String name, String qName) {
+        if (qName.compareTo("dblpperson") == 0 && !coAuthorsFound) {
             coAuthors.add(0);
         }
     }

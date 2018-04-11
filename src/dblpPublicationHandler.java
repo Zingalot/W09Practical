@@ -2,26 +2,35 @@ import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
 import java.util.ArrayList;
 
-public class dblpPublicationHandler extends DefaultHandler
-{
+public class dblpPublicationHandler extends DefaultHandler {
 
-    boolean publication = false;
-    int numberOfAuthors = 0;
+    private boolean publication = false;
+    private int numberOfAuthors = 0;
     private static ArrayList<String> publications = new ArrayList<String>();
     private static ArrayList<Integer> authorNumbers = new ArrayList<Integer>();
     private StringBuilder chars = new StringBuilder();
 
     // Call super constructor
-    public dblpPublicationHandler()
-    {
+    public dblpPublicationHandler() {
         super();
     }
 
+    public boolean isPublication() {
+        return publication;
+    }
+
+    public int getNumberOfAuthors() {
+        return numberOfAuthors;
+    }
+
+    public StringBuilder getChars() {
+        return chars;
+    }
+
     @Override
-    public void startElement(String uri, String name, String qName, Attributes atts)
-    {
+    public void startElement(String uri, String name, String qName, Attributes atts) {
         // Only an increment needed here, other info not relevant
-        if(qName.compareTo("author") == 0) {
+        if (qName.compareTo("author") == 0) {
             numberOfAuthors++;
         }
 
@@ -32,24 +41,23 @@ public class dblpPublicationHandler extends DefaultHandler
 
     }
 
-    public void endElement(String uri, String name, String qName){
+    public void endElement(String uri, String name, String qName) {
         if (qName.compareTo("title") == 0) {
             publications.add(chars.toString());
+            authorNumbers.add(numberOfAuthors);
             publication = false;
             chars.setLength(0);
             numberOfAuthors = 0;
-        }
-        if(qName.compareTo("authors") == 0) {
-            authorNumbers.add(numberOfAuthors);
+
         }
     }
 
-    public void characters(char ch[], int start, int length){
+    public void characters(char ch[], int start, int length) {
 
         if (publication) {
             // Adds the publication and the number of authors to ArrayLists
             chars.append(ch, start, length);
-            /*authorNumbers.add(numberOfAuthors);*/
+
         }
     }
 
