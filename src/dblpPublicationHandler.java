@@ -39,7 +39,7 @@ public class dblpPublicationHandler extends DefaultHandler
             chars.setLength(0);
             numberOfAuthors = 0;
         }
-        if(qName.compareTo("hit") == 0) {
+        if(qName.compareTo("authors") == 0) {
             authorNumbers.add(numberOfAuthors);
         }
     }
@@ -50,7 +50,6 @@ public class dblpPublicationHandler extends DefaultHandler
             // Adds the publication and the number of authors to ArrayLists
             chars.append(ch, start, length);
             /*authorNumbers.add(numberOfAuthors);*/
-            System.out.println(numberOfAuthors);
         }
     }
 

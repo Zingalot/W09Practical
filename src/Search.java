@@ -57,16 +57,16 @@ public class Search {
             //Create the cache directory and download the xml file
 
             //WINDOWS VERSION
-            /*File directory = new File("src\\\\" + String.valueOf(W09Practical.cachePath));
+            File directory = new File("src\\\\" + String.valueOf(W09Practical.cachePath));
             directory.mkdir();
             URL urlObject = new URL(query);
-            String path = "src\\\\" + W09Practical.cachePath + "\\\\" + URLEncoder.encode(query,encoding);*/
+            String path = "src\\\\" + W09Practical.cachePath + "\\\\" + URLEncoder.encode(query,encoding);
 
             //LINUX VERSION
-            File directory = new File("src/" + String.valueOf(W09Practical.cachePath));
+            /*File directory = new File("src/" + String.valueOf(W09Practical.cachePath));
             directory.mkdir();
             URL urlObject = new URL(query);
-            String path = "src/" + W09Practical.cachePath + "/" + URLEncoder.encode(query,encoding);
+            String path = "src/" + W09Practical.cachePath + "/" + URLEncoder.encode(query,encoding);*/
 
 
             File cacheFile = new File(path);
