@@ -11,8 +11,8 @@ public class dblpAuthorHandler extends DefaultHandler
     boolean author = false;
     boolean info = false;
     boolean url = false;
-    private static ArrayList<String> authors = new ArrayList();
-    private static ArrayList<URL> urls = new ArrayList();
+    private static ArrayList<String> authors = new ArrayList<String>();
+    private static ArrayList<URL> urls = new ArrayList<URL>();
     private StringBuilder chars = new StringBuilder();
 
     // Call super constructor

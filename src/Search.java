@@ -14,7 +14,7 @@ import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
 public class Search {
-    public static final String encoding = "ISO_8859_1";
+    public static final String encoding = "UTF-8";
     public static String urlStart = "";
     public static final String AUTHOR_URL_START = "http://dblp.org/search/author/api?q=";
     public static final String VENUE_URL_START = "http://dblp.org/search/venue/api?q=";
@@ -55,10 +55,20 @@ public class Search {
         //Implement the query in a try-catch block
         try {
             //Create the cache directory and download the xml file
-            File directory = new File("src\\\\" + String.valueOf(W09Practical.cachePath));
+
+            //WINDOWS VERSION
+            /*File directory = new File("src\\\\" + String.valueOf(W09Practical.cachePath));
             directory.mkdir();
             URL urlObject = new URL(query);
-            String path = "src\\\\" + W09Practical.cachePath + "\\\\" + URLEncoder.encode(query,encoding);
+            String path = "src\\\\" + W09Practical.cachePath + "\\\\" + URLEncoder.encode(query,encoding);*/
+
+            //LINUX VERSION
+            File directory = new File("src/" + String.valueOf(W09Practical.cachePath));
+            directory.mkdir();
+            URL urlObject = new URL(query);
+            String path = "src/" + W09Practical.cachePath + "/" + URLEncoder.encode(query,encoding);
+
+
             File cacheFile = new File(path);
             File[] cacheDirectory = directory.listFiles();
             if(cacheDirectory != null){
@@ -85,7 +95,7 @@ public class Search {
             is.setEncoding(encoding);
 
             // Create the parser
-            SAXParserFactory factory = SAXParserFactory.newDefaultInstance();
+            SAXParserFactory factory = SAXParserFactory.newInstance();
             SAXParser parser = factory.newSAXParser();
 
             // Parse the data

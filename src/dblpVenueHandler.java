@@ -6,7 +6,7 @@ public class dblpVenueHandler extends DefaultHandler
 {
 
     boolean venue = false;
-    private static ArrayList<String> venues = new ArrayList();
+    private static ArrayList<String> venues = new ArrayList<String>();
     private StringBuilder chars = new StringBuilder();
 
     // Call super constructor

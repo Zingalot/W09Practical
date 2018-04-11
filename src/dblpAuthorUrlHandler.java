@@ -7,8 +7,8 @@ import java.util.ArrayList;
 public class dblpAuthorUrlHandler extends DefaultHandler
 {
 
-    private static ArrayList<Integer> publicationsByAuthor = new ArrayList();
-    private static ArrayList<Integer> coAuthors = new ArrayList();
+    private static ArrayList<Integer> publicationsByAuthor = new ArrayList<Integer>();
+    private static ArrayList<Integer> coAuthors = new ArrayList<Integer>();
     private boolean coAuthorsFound = false;
 
 

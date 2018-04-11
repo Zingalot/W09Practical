@@ -7,8 +7,8 @@ public class dblpPublicationHandler extends DefaultHandler
 
     boolean publication = false;
     int numberOfAuthors = 0;
-    private static ArrayList<String> publications = new ArrayList();
-    private static ArrayList<Integer> authorNumbers = new ArrayList();
+    private static ArrayList<String> publications = new ArrayList<String>();
+    private static ArrayList<Integer> authorNumbers = new ArrayList<Integer>();
     private StringBuilder chars = new StringBuilder();
 
     // Call super constructor
@@ -37,9 +37,10 @@ public class dblpPublicationHandler extends DefaultHandler
             publications.add(chars.toString());
             publication = false;
             chars.setLength(0);
-        }
-        if(qName.compareTo("author") == 0) {
             numberOfAuthors = 0;
+        }
+        if(qName.compareTo("hit") == 0) {
+            authorNumbers.add(numberOfAuthors);
         }
     }
 
@@ -48,7 +49,8 @@ public class dblpPublicationHandler extends DefaultHandler
         if (publication) {
             // Adds the publication and the number of authors to ArrayLists
             chars.append(ch, start, length);
-            authorNumbers.add(numberOfAuthors);
+            /*authorNumbers.add(numberOfAuthors);*/
+            System.out.println(numberOfAuthors);
         }
     }
 
