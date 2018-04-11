@@ -16,6 +16,8 @@ public class W09Practical {
         int cachePosition = -1;
         int searchChoice = 0;
         String query = "";
+
+        //Provides a usage statement if no arguments are supplied
         if (args.length == 0) {
             System.out.println("Usage: java W09Practical --search [author, publication, venue] --query <query> "
                     + "--cache <cache_filepath>");
@@ -37,6 +39,7 @@ public class W09Practical {
                     break;
             }
         }
+        //If commands are not present, inform the user and then exit
         if (searchPosition == -1) {
             System.out.println("Missing search command");
             System.out.println("Malformed command line arguments.");
@@ -52,7 +55,7 @@ public class W09Practical {
             System.out.println("Malformed command line arguments.");
             System.exit(0);
         }
-
+        //Tests for the 'search' choice, the default case handles invalid choices, an exception handles missing values
         try {
             switch (args[searchPosition + 1]) {
                     case "author":
@@ -76,7 +79,7 @@ public class W09Practical {
                 System.exit(0);
         }
 
-
+        //Parses the query if it exists, an exception handles a missing value if query is last
         try {
             query = args[queryPosition + 1];
         } catch (ArrayIndexOutOfBoundsException a) {
@@ -85,6 +88,7 @@ public class W09Practical {
             System.exit(0);
         }
 
+        //Parses the cache filepath, ensures that it is a valid directory
         try {
             cachePath = args[cachePosition + 1];
             File testDirectory = new File(cachePath);
@@ -98,8 +102,7 @@ public class W09Practical {
             System.exit(0);
         }
 
-
-
+        //Calls the search class and prints the results
         switch (searchChoice) {
             case 1:
                 Search searcher = new Search("author");
