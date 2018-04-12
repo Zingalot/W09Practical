@@ -1,7 +1,4 @@
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.file.Files;
@@ -15,10 +12,10 @@ import javax.xml.parsers.SAXParserFactory;
 
 public class Search {
     public static final String ENCODING = "UTF-8";
-    public static final String AUTHOR_URL_START = "http://dblp.org/search/author/api?q=";
-    public static final String VENUE_URL_START = "http://dblp.org/search/venue/api?q=";
-    public static final String PUBLICATION_URL_START = "http://dblp.org/search/publ/api?q=";
-    public static final String URL_END = "&h=40&c=0";
+    public static final String AUTHOR_URL_START = "http://dblp.org/search/author/api?format=xml";
+    public static final String VENUE_URL_START = "http://dblp.org/search/venue/api?format=xml";
+    public static final String PUBLICATION_URL_START = "http://dblp.org/search/publ/api?format=xml";
+    public static final String URL_END = "&c=0&h=40&q=";
     private static String urlStart = "";
     private boolean author;
     private boolean venue;
@@ -45,10 +42,10 @@ public class Search {
     public void executeSearch(String searchTerm) {
 
         // Concatonate the URL
-        String query = urlStart + searchTerm + URL_END;
+        String query = urlStart + URL_END + searchTerm;
 
-        // Replace blanks just in case
-        query = query.replace(" ", "%20");
+        // Replace blanks with supported character
+        query = query.replace(" ", "+");
 
 
 
